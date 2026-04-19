@@ -1,0 +1,85 @@
+====================================================
+  GUIA DE DESPLIEGUE - HELP DESK IT en RAILWAY
+====================================================
+
+IMPORTANTE: GitHub solo guarda tu codigo, NO ejecuta la app.
+Para que este disponible en internet necesitas un servicio
+de hosting como Railway.
+
+
+----------------------------------------------------
+PASO 1: SUBIR EL CODIGO A GITHUB
+----------------------------------------------------
+
+Abre una terminal en la carpeta del proyecto y ejecuta
+estos comandos uno por uno:
+
+  git init
+  git add .
+  git commit -m "first commit"
+  git branch -M main
+  git remote add origin https://github.com/TU-USUARIO/helpdesk-app.git
+  git push -u origin main
+
+NOTA: Reemplaza TU-USUARIO con tu nombre de usuario de GitHub.
+      Si no tienes el repositorio creado, primero crealo en
+      github.com antes de ejecutar estos comandos.
+
+
+----------------------------------------------------
+PASO 2: DESPLEGAR EN RAILWAY
+----------------------------------------------------
+
+1. Entra a https://railway.app
+2. Inicia sesion con tu cuenta de GitHub
+3. Clic en "New Project"
+4. Selecciona "Deploy from GitHub repo"
+5. Elige tu repositorio (helpdesk-app)
+6. Railway detecta automaticamente que es Node.js y lo despliega
+7. Espera unos minutos a que termine el despliegue
+8. Ve a "Settings" -> "Domains" -> genera tu URL publica
+
+Tu app estara disponible en una URL tipo:
+  https://helpdesk-app-xxxx.railway.app
+
+
+----------------------------------------------------
+PASO 3: ACCEDER A LA APP
+----------------------------------------------------
+
+Una vez desplegada, cualquier persona con la URL puede
+acceder a tu aplicacion desde el navegador, sin instalar
+nada.
+
+
+----------------------------------------------------
+ADVERTENCIA IMPORTANTE - BASE DE DATOS
+----------------------------------------------------
+
+Railway en el plan gratuito puede reiniciar el servidor
+ocasionalmente. Cada reinicio crea una base de datos
+SQLite vacia, lo que significa que los datos (tickets,
+comentarios) se pueden perder.
+
+Si necesitas que los datos sean permanentes, considera:
+  - Usar PostgreSQL (Railway lo ofrece gratis como addon)
+  - Actualizar al plan de pago de Railway
+
+Para correr la app localmente sigue siendo:
+  npm start
+  Luego abre: http://localhost:3000
+
+
+----------------------------------------------------
+RESUMEN DE CAMBIOS REALIZADOS AL PROYECTO
+----------------------------------------------------
+
+server.js   -> Puerto ahora usa process.env.PORT || 3000
+               (necesario para que Railway asigne el puerto)
+
+package.json -> Agregado "engines": { "node": ">=18.0.0" }
+                Eliminada dependencia de Electron
+                Scripts start y dev usan "node server.js"
+
+
+====================================================

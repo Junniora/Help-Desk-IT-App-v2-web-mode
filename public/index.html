@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Help Desk IT - Sistema de Tickets</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <div class="header-badge"><i data-lucide="shield-check"></i> IT Support</div>
+            <h1>Help Desk IT</h1>
+            <p>Sistema de Gestión de Tickets de Soporte</p>
+            <button class="theme-toggle" id="theme-toggle" title="Cambiar tema">
+                <i data-lucide="moon"></i>
+            </button>
+        </header>
+
+        <!-- Navegación de pestañas -->
+        <nav class="tabs">
+            <button class="tab-button active" onclick="cambiarPestana('lista')">
+                <i data-lucide="clipboard-list"></i> Ver Tickets
+            </button>
+            <button class="tab-button" onclick="cambiarPestana('crear')">
+                <i data-lucide="plus-circle"></i> Crear Ticket
+            </button>
+        </nav>
+
+        <!-- Pestaña: Lista de Tickets -->
+        <div id="tab-lista" class="tab-content active">
+            <div class="filtros">
+                <h2>Tickets Registrados</h2>
+                <div class="filtro-grupo">
+                    <label><i data-lucide="filter"></i> Filtrar por estado:</label>
+                    <select id="filtro-estado" onchange="cargarTickets()">
+                        <option value="">Todos</option>
+                        <option value="Abierto">Abierto</option>
+                        <option value="En Progreso">En Progreso</option>
+                        <option value="Resuelto">Resuelto</option>
+                        <option value="Cerrado">Cerrado</option>
+                    </select>
+                </div>
+                <button onclick="cargarTickets()" id="btn-refrescar" class="btn-refrescar"><i data-lucide="refresh-cw"></i> Refrescar</button>
+            </div>
+
+            <div id="lista-tickets" class="tickets-grid">
+                <!-- Los tickets se cargarán aquí dinámicamente -->
+            </div>
+        </div>
+
+        <!-- Pestaña: Crear Ticket -->
+        <div id="tab-crear" class="tab-content">
+            <h2>Crear Nuevo Ticket</h2>
+            <form id="form-ticket" class="form-ticket">
+                <div class="form-group">
+                    <label for="titulo">Título del problema *</label>
+                    <input type="text" id="titulo" required placeholder="Ej: No puedo acceder al correo electrónico">
+                </div>
+
+                <div class="form-group">
+                    <label for="descripcion">Descripción detallada *</label>
+                    <textarea id="descripcion" rows="4" required placeholder="Describe el problema con el mayor detalle posible..."></textarea>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="categoria"><i data-lucide="tag"></i> Categoría *</label>
+                        <select id="categoria" required>
+                            <option value="">Selecciona una categoría</option>
+                            <option value="Hardware">Hardware</option>
+                            <option value="Software">Software</option>
+                            <option value="Red">Red/Conectividad</option>
+                            <option value="Email">Email</option>
+                            <option value="Accesos">Accesos/Permisos</option>
+                            <option value="Impresoras">Impresoras</option>
+                            <option value="Otro">Otro</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="prioridad"><i data-lucide="alert-triangle"></i> Prioridad *</label>
+                        <select id="prioridad" required>
+                            <option value="">Selecciona prioridad</option>
+                            <option value="Baja">Baja</option>
+                            <option value="Media">Media</option>
+                            <option value="Alta">Alta</option>
+                            <option value="Urgente">Urgente</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="nombre_usuario"><i data-lucide="user"></i> Tu nombre completo *</label>
+                        <input type="text" id="nombre_usuario" required placeholder="Juan Pérez">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email_usuario"><i data-lucide="mail"></i> Tu correo electrónico *</label>
+                        <input type="email" id="email_usuario" required placeholder="juan.perez@empresa.com">
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-submit"><i data-lucide="send"></i> Crear Ticket</button>
+            </form>
+        </div>
+
+        <!-- Modal para ver detalles del ticket -->
+        <div id="modal-ticket" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="cerrarModal()">&times;</span>
+                <div id="contenido-modal">
+                    <!-- El contenido se cargará dinámicamente -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+    <script>
+        // Initialize Lucide icons after DOM is ready
+        document.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+        });
+    </script>
+</body>
+</html>
